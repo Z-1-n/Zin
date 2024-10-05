@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Zin's Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        body.loaded {
+            opacity: 1;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        body.loaded nav {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #ff6b6b;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        nav a:hover::after {
+            transform: scaleX(1);
+        }
+        nav a.active {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        h1 {
+            color: #ff0000;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 3px #ff0000, 0 0 5px #ff0000;
+            animation: softGlow 3s ease-in-out infinite alternate, fadeInDown 1s ease;
+        }
+        @keyframes softGlow {
+            from { text-shadow: 0 0 1px #ff0000, 0 0 2px #ff0000; }
+            to { text-shadow: 0 0 3px #ff0000, 0 0 5px #ff0000; }
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-right: 10px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 400;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .button-secondary {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #999;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .button-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #bbb;
+        }
+        .project {
+            background-color: #444;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        .project.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .project h2 {
+            color: #ff6b6b;
+            margin-top: 0;
+        }
+        .project-images {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .project-images img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .project-images img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .view-more {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .view-more:hover {
+            background-color: #ff8787;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .view-more::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        .view-more:hover::after {
+            animation: ripple 1s ease-out;
+        }
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+        .hidden-images {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease;
+            opacity: 0;
+        }
+        .hidden-images.show {
+            max-height: 1000px;
+            opacity: 1;
+            transition: max-height 0.5s ease-in, opacity 0.5s ease;
+        }
+        .hidden-images img {
+            width: calc(25% - 7.5px);
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .hidden-images.show img {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="main.html">Home</a>
+            <a href="contact.html">Contact</a>
+            <a href="portfolio.html" class="active">Portfolio</a>
+            <a href="free.html">Free</a>
+        </nav>
+        <h1>Portfolio</h1>
+        
+        <div class="project-list">
+            <div class="project">
+                <h2>Project 1: FlameFrags Event Hosting</h2>
+                <p>Description of the FlameFrags event hosting project. This showcases my ability to manage and host large-scale gaming events.</p>
+                <div class="project-images">
+                    <img src="https://via.placeholder.com/200x100?text=Image+1" alt="FlameFrags Event 1">
+                    <img src="https://via.placeholder.com/200x100?text=Image+2" alt="FlameFrags Event 2">
+                    <img src="https://via.placeholder.com/200x100?text=Image+3" alt="FlameFrags Event 3">
+                    <img src="https://via.placeholder.com/200x100?text=Image+4" alt="FlameFrags Event 4">
+                </div>
+                <button class="view-more">View More Images (+6)</button>
+                <div class="hidden-images">
+                    <img src="https://via.placeholder.com/200x100?text=Image+5" alt="FlameFrags Event 5">
+                    <img src="https://via.placeholder.com/200x100?text=Image+6" alt="FlameFrags Event 6">
+                    <img src="https://via.placeholder.com/200x100?text=Image+7" alt="FlameFrags Event 7">
+                    <img src="https://via.placeholder.com/200x100?text=Image+8" alt="FlameFrags Event 8">
+                    <img src="https://via.placeholder.com/200x100?text=Image+9" alt="FlameFrags Event 9">
+                    <img src="https://via.placeholder.com/200x100?text=Image+10" alt="FlameFrags Event 10">
+                </div>
+            </div>
+
+            <div class="project">
+                <h2>Project 2: Sharkilz 'Ancient Greek' Style Event</h2>
+                <p>Details about the Sharkilz event with an Ancient Greek theme. This project demonstrates my creativity in theme implementation and event organization.</p>
+                <div class="project-images">
+                    <img src="https://via.placeholder.com/200x100?text=Image+1" alt="Sharkilz Event 1">
+                    <img src="https://via.placeholder.com/200x100?text=Image+2" alt="Sharkilz Event 2">
+                    <img src="https://via.placeholder.com/200x100?text=Image+3" alt="Sharkilz Event 3">
+                    <img src="https://via.placeholder.com/200x100?text=Image+4" alt="Sharkilz Event 4">
+                </div>
+                <button class="view-more">View More Images (+5)</button>
+                <div class="hidden-images">
+                    <img src="https://via.placeholder.com/200x100?text=Image+5" alt="Sharkilz Event 5">
+                    <img src="https://via.placeholder.com/200x100?text=Image+6" alt="Sharkilz Event 6">
+                    <img src="https://via.placeholder.com/200x100?text=Image+7" alt="Sharkilz Event 7">
+                    <img src="https://via.placeholder.com/200x100?text=Image+8" alt="Sharkilz Event 8">
+                    <img src="https://via.placeholder.com/200x100?text=Image+9" alt="Sharkilz Event 9">
+                </div>
+            </div>
+        </div>
+        
+        <a href="main.html" class="button button-secondary">Back to Home</a>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.body.classList.add('loaded');
+
+            const projects = document.querySelectorAll('.project');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            projects.forEach(project => {
+                observer.observe(project);
+            });
+
+            document.querySelectorAll('.view-more').forEach(button => {
+                button.addEventListener('click', function() {
+                    const hiddenImages = this.nextElementSibling;
+                    if (hiddenImages.classList.contains('show')) {
+                        hiddenImages.classList.remove('show');
+                        this.textContent = 'View More Images (+' + hiddenImages.children.length + ')';
+                    } else {
+                        hiddenImages.classList.add('show');
+                        this.textContent = 'Show Less';
+                    }
+                });
+            });
+
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if(this.hostname === window.location.hostname) {
+                        e.preventDefault();
+                        document.body.style.opacity = 0;
+                        setTimeout(() => {
+                            window.location = this.href;
+                        }, 500);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

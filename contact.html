@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Zin's Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        body.loaded {
+            opacity: 1;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        body.loaded nav {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #ff6b6b;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        nav a:hover::after {
+            transform: scaleX(1);
+        }
+        nav a.active {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        h1 {
+            color: #ff0000;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 3px #ff0000, 0 0 5px #ff0000;
+            animation: softGlow 3s ease-in-out infinite alternate, fadeInDown 1s ease;
+        }
+        @keyframes softGlow {
+            from { text-shadow: 0 0 1px #ff0000, 0 0 2px #ff0000; }
+            to { text-shadow: 0 0 3px #ff0000, 0 0 5px #ff0000; }
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .contact-info {
+            background-color: #444;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        body.loaded .contact-info {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .discord-link {
+            display: inline-block;
+            background-color: #7289DA;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .discord-link:hover {
+            background-color: #5E73BC;
+        }
+        .discord-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="main.html">Home</a>
+            <a href="contact.html" class="active">Contact</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="free.html">Free</a>
+        </nav>
+        <h1>Contact Me</h1>
+        <div class="contact-info">
+            <p>Feel free to reach out to me through Discord:</p>
+            <a href="https://discord.gg/vGaRWn5Nhc" class="discord-link" target="_blank">
+                <svg class="discord-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="currentColor" d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.075.075 0 0 1-.008-.125c.126-.095.252-.193.372-.292a.075.075 0 0 1 .078-.01c3.927 1.789 8.18 1.789 12.062 0a.074.074 0 0 1 .079.009c.12.099.246.198.373.293a.075.075 0 0 1-.006.125c-.598.35-1.216.642-1.873.892a.075.075 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.834 19.834 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                </svg>
+                Join my Discord server
+            </a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if(this.hostname === window.location.hostname) {
+                        e.preventDefault();
+                        document.body.style.opacity = 0;
+                        setTimeout(() => {
+                            window.location = this.href;
+                        }, 500);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
